@@ -1,0 +1,41 @@
+name: Python
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - 3.6
+          - 3.7
+          - 3.8
+          - 3.9
+          - 3.9-dev
+          - 3.10-dev
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        id: deps_cache
+        with:
+          path: |
+            ${{ env.pythonLocation}}/lib/*/site-packages/*
+            ${{ env.pythonLocation}}/bin/*
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+      - name: Install package and dependencies
+        run: make setup-ci
+      - name: Run linters and check formatting
+        run: make lint
+      - name: Run tests
+        run: make test
+      - name: Send coverage stats to Codecov
+        run: bash <(curl -s https://codecov.io/bash)
