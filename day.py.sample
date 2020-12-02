@@ -10,6 +10,8 @@
 
 from aoc import integers
 from aoc import integers_list
+from aoc import strip
+from aoc import strip_list
 
 import collections
 import itertools
@@ -19,6 +21,8 @@ def part1(lines):
     # lines = list(lines)
     # lines = integers(lines)
     # lines = integers_list(lines)
+    # lines = strip(lines)
+    # lines = strip_list(lines)
     for line in lines:
         line = line.rstrip("\n")
         pass

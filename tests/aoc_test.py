@@ -9,6 +9,7 @@
 # Copyright (c) 2020, Pablo S. Blum de Aguiar <scorphus@gmail.com>
 
 from aoc import integers_list
+from aoc import strip_list
 
 import pytest
 
@@ -44,3 +45,39 @@ def test_integers(lines, expected):
 def test_integers_raises(lines, exception):
     with pytest.raises(exception):
         integers_list(lines)
+
+
+@pytest.mark.parametrize(
+    "lines, expected",
+    [
+        ("", []),
+        ("a", ["a"]),
+        ("abc", ["a", "b", "c"]),
+        ([], []),
+        ([""], [""]),
+        (["1"], ["1"]),
+        (["1\n"], ["1"]),
+        (["1", "2", "3"], ["1", "2", "3"]),
+        (["1\n", "2\n", "3\n"], ["1", "2", "3"]),
+        (["a\n", "b\n", "c\n"], ["a", "b", "c"]),
+        (["a ", "b ", "c "], ["a ", "b ", "c "]),
+    ],
+)
+def test_strip(lines, expected):
+    assert strip_list(lines) == expected
+
+
+@pytest.mark.parametrize(
+    "lines, exception",
+    [
+        (1, TypeError),
+        (None, TypeError),
+        (False, TypeError),
+        ([1], AttributeError),
+        ([None], AttributeError),
+        ([False], AttributeError),
+    ],
+)
+def test_strip_raises(lines, exception):
+    with pytest.raises(exception):
+        strip_list(lines)
