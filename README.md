@@ -21,7 +21,7 @@ See [LICENSE] for details.
 
 [build-badge]: https://github.com/scorphus/advent-of-code-2020/workflows/Python/badge.svg
 [action-link]: https://github.com/scorphus/advent-of-code-2020/actions?query=workflow%3APython
-[codecov-badge]: https://codecov.io/gh/scorphus/advent-of-code-2020/branch/main/graph/badge.svg
+[codecov-badge]: https://codecov.io/gh/scorphus/advent-of-code-2020/branch/main/graph/badge.svg?token=AefYHaJ5VS
 [codecov-link]: https://codecov.io/gh/scorphus/advent-of-code-2020
 [advent of code 2020]: https://adventofcode.com/2020/
 [Python]: https://www.python.org/
