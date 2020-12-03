@@ -24,6 +24,22 @@ setup-ci:
 	@pip install -U -e .\[tests\]
 .PHONY: setup-ci
 
+# create new challenge and tests from samples
+next-day:
+	@$(MAKE) new-day-$$(printf "%02d" $$(echo $$(date +%d) + 1 | bc))
+.PHONY: next-day
+
+new-day:
+	@$(MAKE) new-day-$$(date +%d)
+.PHONY: new-day
+
+new-day-%:
+	@cp day.py.sample aoc/day$*.py
+	@cp day_test.py.sample tests/day$*_test.py
+	@sed -i.tmp s/XX/$*/ tests/day$*_test.py
+	@rm tests/day$*_test.py.tmp
+.PHONY: new-day-
+
 # run isort, black and flake8 for style guide enforcement
 isort:
 	@isort .
