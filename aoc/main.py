@@ -17,14 +17,16 @@ import sys
 
 def aoc():
     try:
-        day, part, *_ = integers(sys.argv[1].split("."))
-        if sys.stdin.isatty():
-            raise IOError
+        day, part, *_ = integers(sys.argv[-1].split("."))
     except (IndexError, IOError, ValueError):
-        print("Try: `aoc < input/day01 1.1` or `aoc < input/day07 7.2`")
+        print("Try: `aoc < input/day01 1.1` or `aoc input/day07 7.2`")
         exit(1)
     day_part = import_day_part(day, part)
-    answer = day_part(sys.stdin)
+    if sys.stdin.isatty():
+        with open(sys.argv[-2]) as input_file:
+            answer = day_part(input_file)
+    else:
+        answer = day_part(sys.stdin)
     if not answer:
         print("⛔️")
         exit(1)

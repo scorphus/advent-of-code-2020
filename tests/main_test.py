@@ -16,12 +16,23 @@ import pytest
 import sys
 
 
-def test_aoc(mocker, capsys):
-    import_day_part_mock = mocker.patch("aoc.main.import_day_part")
-    copy_to_clipboard_mock = mocker.patch("aoc.main.copy_to_clipboard")
+def test_aoc(import_day_part_mock, copy_to_clipboard_mock, capsys):
     aoc()
-    answer = import_day_part_mock.return_value.return_value
+    import_day_part_mock.return_value.assert_called_once_with(sys.stdin)
     import_day_part_mock.assert_called_once_with(1, 1)
+    answer = import_day_part_mock.return_value.return_value
+    copy_to_clipboard_mock.assert_called_once_with(f"{answer}".encode())
+    assert f"{answer}" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("argv, isatty", [(["input", "1.1"], True)])
+def test_aoc_stdin_isatty(import_day_part_mock, copy_to_clipboard_mock, mocker, capsys):
+    open_mock = mocker.patch("aoc.main.open")
+    aoc()
+    open_mock.assert_called_once_with("input")
+    import_day_part_mock.return_value.assert_called_once_with(open_mock().__enter__())
+    import_day_part_mock.assert_called_once_with(1, 1)
+    answer = import_day_part_mock.return_value.return_value
     copy_to_clipboard_mock.assert_called_once_with(f"{answer}".encode())
     assert f"{answer}" in capsys.readouterr().out
 
@@ -44,13 +55,6 @@ def test_aoc_bad_args(capsys):
     assert capsys.readouterr().out.startswith("Try")
 
 
-@pytest.mark.parametrize("isatty", [True])
-def test_aoc_stdin_isatty(capsys):
-    with pytest.raises(SystemExit):
-        aoc()
-    assert capsys.readouterr().out.startswith("Try")
-
-
 @pytest.mark.parametrize("day, part", [(1, 2), (2, 1)])
 def test_import_day_part(day, part, mocker):
     mock = mocker.patch("aoc.main.import_module")
@@ -63,6 +67,16 @@ def test_copy_to_clipboard(mocker):
     mock = mocker.patch("aoc.main.subprocess")
     copy_to_clipboard("very wow text")
     mock.run.assert_called_once_with("pbcopy", input="very wow text")
+
+
+@pytest.fixture
+def import_day_part_mock(mocker):
+    return mocker.patch("aoc.main.import_day_part")
+
+
+@pytest.fixture
+def copy_to_clipboard_mock(mocker):
+    return mocker.patch("aoc.main.copy_to_clipboard")
 
 
 @pytest.fixture(autouse=True)
