@@ -16,11 +16,12 @@ import pytest
 import sys
 
 
-def test_aoc(import_day_part_mock, copy_to_clipboard_mock, capsys):
+@pytest.mark.parametrize("answer", [359, 2.920051, "wow answer", "719", True])
+def test_aoc(answer, import_day_part_mock, copy_to_clipboard_mock, capsys):
+    import_day_part_mock.return_value.return_value = answer
     aoc()
     import_day_part_mock.return_value.assert_called_once_with(sys.stdin)
     import_day_part_mock.assert_called_once_with(1, 1)
-    answer = import_day_part_mock.return_value.return_value
     copy_to_clipboard_mock.assert_called_once_with(f"{answer}".encode())
     assert f"{answer}" in capsys.readouterr().out
 
@@ -37,15 +38,15 @@ def test_aoc_stdin_isatty(import_day_part_mock, copy_to_clipboard_mock, mocker, 
     assert f"{answer}" in capsys.readouterr().out
 
 
-def test_aoc_no_answer(mocker, capsys):
-    day_part_mock = mocker.Mock(return_value=None)
-    import_day_part_mock = mocker.patch(
-        "aoc.main.import_day_part", return_value=day_part_mock
-    )
+@pytest.mark.parametrize("answer", ["", 0, False, None, []])
+def test_aoc_no_answer(answer, import_day_part_mock, capsys):
+    import_day_part_mock.return_value.return_value = answer
     with pytest.raises(SystemExit):
         aoc()
     import_day_part_mock.assert_called_once_with(1, 1)
-    assert capsys.readouterr().out == "⛔️\n"
+    out = capsys.readouterr().out
+    assert "⛔️" in out
+    assert f"{answer}" in out
 
 
 @pytest.mark.parametrize("argv", [[], [""], ["1"], ["11"], ["1", "1"]])

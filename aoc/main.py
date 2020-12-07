@@ -28,7 +28,7 @@ def aoc():
     else:
         answer = day_part(sys.stdin)
     if not answer:
-        print("⛔️")
+        print(f"⛔️ answer is {answer}")
         exit(1)
     copy_to_clipboard(f"{answer}".encode())
     print(f"Your answer is: {answer} (already copied to clipboard)")
