@@ -38,6 +38,7 @@ new-day-%:
 	@cp day_test.py.sample tests/day$*_test.py
 	@sed -i.tmp s/XX/$*/ tests/day$*_test.py
 	@rm tests/day$*_test.py.tmp
+	@touch inputs/day$*
 .PHONY: new-day-
 
 # run isort, black and flake8 for style guide enforcement
