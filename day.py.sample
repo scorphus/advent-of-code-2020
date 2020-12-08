@@ -12,9 +12,13 @@ from aoc import integers
 from aoc import integers_list
 from aoc import strip
 from aoc import strip_list
+from functools import cache
 
 import collections
+import graphlib
+import heapq
 import itertools
+import math
 
 
 def part1(lines):
