@@ -12,6 +12,33 @@ import collections
 import graphlib
 
 
+def part1(lines):
+    graph = {}
+    for line in lines:
+        bag, bags = parse_line(line)
+        for _, each_bag in bags:
+            graph.setdefault(each_bag, []).append(bag)
+    visited = bfs(graph, "shiny gold")
+    return len(visited) - 1
+
+
+def part2(lines):
+    graph = {}
+    bags_in_bag = {}
+    for line in lines:
+        bag, bags = parse_line(line)
+        graph[bag] = set(b for _, b in bags)
+        bags_in_bag[bag] = bags
+    qtt_acc = {}
+    for bag in graphlib.TopologicalSorter(graph).static_order():
+        total = 1
+        for qtt, bag_in in bags_in_bag[bag]:
+            total += qtt * qtt_acc[bag_in]
+        qtt_acc[bag] = total
+        if bag == "shiny gold":
+            return qtt_acc[bag] - 1
+
+
 def parse_bags(bags):
     bag_list = []
     for bag in bags.split(", "):
@@ -41,30 +68,3 @@ def bfs(bags, start):
                 next_bags.append(next_bag)
                 visited.add(next_bag)
     return visited
-
-
-def part1(lines):
-    graph = {}
-    for line in lines:
-        bag, bags = parse_line(line)
-        for _, each_bag in bags:
-            graph.setdefault(each_bag, []).append(bag)
-    visited = bfs(graph, "shiny gold")
-    return len(visited) - 1
-
-
-def part2(lines):
-    graph = {}
-    bags_in_bag = {}
-    for line in lines:
-        bag, bags = parse_line(line)
-        graph[bag] = set(b for _, b in bags)
-        bags_in_bag[bag] = bags
-    qtt_acc = {}
-    for bag in graphlib.TopologicalSorter(graph).static_order():
-        total = 1
-        for qtt, bag_in in bags_in_bag[bag]:
-            total += qtt * qtt_acc[bag_in]
-        qtt_acc[bag] = total
-        if bag == "shiny gold":
-            return qtt_acc[bag] - 1
