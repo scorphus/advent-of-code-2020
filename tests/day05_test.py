@@ -61,5 +61,4 @@ def test_part2(lines, output):
     ],
 )
 def test_get_seat_id(seat_address, seat_id):
-    print()
     assert get_seat_id(seat_address) == seat_id
