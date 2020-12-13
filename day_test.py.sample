@@ -21,7 +21,7 @@ import pytest
             """\
 """.rstrip().splitlines(),
             None,
-        )
+        ),
     ],
 )
 def test_part1(lines, output):
@@ -35,7 +35,7 @@ def test_part1(lines, output):
             """\
 """.rstrip().splitlines(),
             None,
-        )
+        ),
     ],
 )
 def test_part2(lines, output):
