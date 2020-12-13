@@ -52,7 +52,7 @@ setup(
     author="Pablo S. Blum de Aguiar",
     author_email="scorphus@gmail.com",
     packages=find_packages(),
-    install_requires=[],
+    install_requires=["sympy"],
     extras_require={"tests": tests_require},
     entry_points={"console_scripts": ["aoc = aoc.main:aoc"]},
     include_package_data=True,
