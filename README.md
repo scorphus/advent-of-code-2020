@@ -8,9 +8,9 @@ subtle refactoring applied — e.g. variable renaming.
 ## Motivations
 
 - Have fun 🙂
-- Compete 🥋
 - Practice problem solving ⚡️
-- Practice [Python], its tooling and ecosystem 🐍
+- Practice [Python], and its [standard library], tooling, and ecosystem 🐍
+- Compete 🥋 — and yet produce readable code 🤓
 
 ## License
 
@@ -25,4 +25,5 @@ See [LICENSE] for details.
 [codecov-link]: https://codecov.io/gh/scorphus/advent-of-code-2020
 [advent of code 2020]: https://adventofcode.com/2020/
 [Python]: https://www.python.org/
+[standard library]: https://docs.python.org/3/library/
 [license]: LICENSE
