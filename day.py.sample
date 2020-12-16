@@ -13,6 +13,7 @@ from aoc import integers_list
 from aoc import strip
 from aoc import strip_list
 from functools import cache
+from pprint import pprint
 
 import collections
 import graphlib
