@@ -25,7 +25,7 @@ import pytest
     ],
 )
 def test_part1(lines, output):
-    assert part1(lines) == output
+    assert part1(iter(lines)) == output
 
 
 @pytest.mark.parametrize(
@@ -39,4 +39,4 @@ def test_part1(lines, output):
     ],
 )
 def test_part2(lines, output):
-    assert part2(lines) == output
+    assert part2(iter(lines)) == output
