@@ -19,13 +19,13 @@ def integers_list(lines):
     return list(integers(lines))
 
 
-def strip(lines, chars=["\n"]):
+def strip(lines, chars="\n"):
     return map(partial(strip_chars, chars=chars), lines)
 
 
-def strip_list(lines, chars=["\n"]):
+def strip_list(lines, chars="\n"):
     return list(strip(lines, chars))
 
 
-def strip_chars(string, chars=["\n"]):
-    return string.strip(*chars)
+def strip_chars(string, chars="\n"):
+    return string.strip(chars)
