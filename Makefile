@@ -34,7 +34,8 @@ new-day:
 .PHONY: new-day
 
 new-day-%:
-	@cp day.py.sample aoc/day$*.py
+	@mkdir -p aoc/day$*
+	@cp day.py.sample aoc/day$*/__init__.py
 	@cp day_test.py.sample tests/day$*_test.py
 	@sed -i.tmp s/XX/$*/ tests/day$*_test.py
 	@rm tests/day$*_test.py.tmp
